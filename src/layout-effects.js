@@ -1,4 +1,5 @@
-import Sortable from "sortablejs"
+import DOMHandler from "./dom-handler"
+
 // SHOW/HIDE SIDEBAR TOGGLER
 const menuButton = document.querySelector(".menu-button")
 const sidebar = document.querySelector(".sidebar")
@@ -7,6 +8,7 @@ menuButton.addEventListener('click', e => {
   sidebar.classList.toggle("collapsed")
 })
 
+import Sortable from "sortablejs"
 // SORTABLE LIST
 const sortable = Sortable.create(document.querySelector(".task-list"), {
   animation: 150,
@@ -61,38 +63,36 @@ slider.addEventListener('change', e => {
   priorityDisplay.className = prioClass
 })
 
-// CLOSE TASK MODAL
+// OPEN AND CLOSE MODALS
+
+// TASK MODAL
 const closeTaskModalButton = document.querySelector("#close-task-modal")
 const taskModalBackground = document.querySelector("#new-task-modal")
 const newTaskButton = document.querySelector(".new-task-button")
-const taskForm = document.querySelector("#new-task-form")
 
+// CLOSE TASK MODAL
 closeTaskModalButton.addEventListener('click', e => {
   e.preventDefault()
-  setTimeout(() => { taskModalBackground.style.display = "none" }, 200)
-  taskModalBackground.classList.add("hidden")
+  DOMHandler.closeModal(taskModalBackground)
 })
 
 // OPEN TASK MODAL
 newTaskButton.addEventListener('click', e => {
-  taskModalBackground.style.display = "flex"
-  setTimeout(() => { taskModalBackground.classList.remove("hidden") }, 10)
+  DOMHandler.openModal(taskModalBackground)
 })
 
-// CLOSE PROJECT MODAL
+// PROJECT MODAL
 const closeProjectModalButton = document.querySelector("#close-project-modal")
 const projectModalBackground = document.querySelector("#new-project-modal")
 const newProjectButton = document.querySelector(".new-project-button")
-const projectForm = document.querySelector("#new-project-form")
 
+// CLOSE PROJECT MODAL
 closeProjectModalButton.addEventListener('click', e => {
   e.preventDefault()
-  setTimeout(() => { projectModalBackground.style.display = "none" }, 200)
-  projectModalBackground.classList.add("hidden")
+  DOMHandler.closeModal(projectModalBackground)
 })
 
 // OPEN PROJECT MODAL
 newProjectButton.addEventListener('click', e => {
-  projectModalBackground.style.display = "flex"
-  setTimeout(() => { projectModalBackground.classList.remove("hidden") }, 10)
+  DOMHandler.openModal(projectModalBackground)
 })
