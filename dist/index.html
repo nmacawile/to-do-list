@@ -3,9 +3,213 @@
   <head>
     <meta charset="utf-8">
     <title>To-Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="assets/normalize.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Oswald:400,700" rel="stylesheet">
     <link href="assets/styles.css" rel="stylesheet">
   </head>
   <body>
+    <div id="new-project-modal" class="modal-background hidden" style="display: none;">
+      <div class="modal-wrapper">
+        <form id="new-project-form" class="modal">
+          <div class="modal-header">
+            <h3 class="modal-heading">New Project</h3>
+            <button type="button" id="close-project-modal" class="close-modal-button">&#10006</button>
+          </div>
+          <div class="modal-body">
+            <label for="project-name-textbox">Name</label>
+            <input type="text" id="project-name-textbox" autocomplete="off" required>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="modal-button">Create Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div id="new-task-modal" class="modal-background hidden" style="display: none;">
+      <div class="modal-wrapper">
+        <form id="new-task-form" class="modal">
+          <div class="modal-header">
+            <h3 class="modal-heading">New Task</h3>
+            <button type="button" id="close-task-modal" class="close-modal-button">&#10006</button>
+          </div>
+          <div class="modal-body">
+            <label for="name-textbox">Name</label>
+            <input type="text" id="name-textbox" autocomplete="off" required>
+
+            <label for="description-textbox">Description</label>
+            <textarea id="description-textbox" maxlength="200" optional></textarea>
+
+            <label for="due-date-field">Due date</label>
+            <input type="date" id="due-date-field" required>
+            
+            <label for="priority-slider">Priority: <span id="priority-value" class="normal-prio-color">Normal</span></label>
+            <div class="slider-wrapper">
+              <input type="range" id="priority-slider" min="1" max="3" value="2">             
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="modal-button">Create Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="header">
+      <div class="container">
+        <div class="header-nav">
+          <div class="menu-button-wrapper">
+            <button type="button" class="menu-button">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </button>  
+          </div>        
+          <h1 class="header-logo">To-Do List</h1>
+        </div>
+      </div>
+    </div>
+    <div class="main container">
+      <div class="sidebar collapsed">
+        <h4 class="heading">Projects</h4>
+        <button type="button" class="new-project-button">
+          <i class="fas fa-plus new-project-icon"></i>
+          New Project
+        </button>
+        <ul class="sidebar-list">
+          <li><a href="#" class="sidebar-link">PROJECT 1</a></li>
+          <li><a href="#" class="sidebar-link">PROJECT 2</a></li>
+          <li><a href="#" class="sidebar-link">PROJECT 3</a></li>
+          <li><a href="#" class="sidebar-link">PROJECT 4</a></li>
+          <li><a href="#" class="sidebar-link">PROJECT 5</a></li>
+          <li><a href="#" class="sidebar-link">PROJECT 6</a></li>
+        </ul>
+      </div>
+
+      <div class="project">
+        <h2 class="project-name"><u>PROJECT TITLE</u></h2>
+        <button type="button" class="delete-project-button">Delete</button>
+        <h4 class="heading">Tasks</h4>
+
+        <button type="button" class="new-task-button"><i class="fas fa-plus new-task-icon"></i>New Task</button>
+
+        <ul class="task-list">
+
+          <li class="task">
+            <div class="task-header">
+              <div class="handle">
+                <i class="fas fa-thumbtack"></i>
+              </div>
+              <div class="task-header-content">             
+                <h3 class="task-name">
+                  First task
+                </h3>
+                <div class="task-info">
+                  <div class="task-due-date">08/09/2018</div>
+                  <button type="button" class="details-toggler"></button>
+                </div>
+              </div>
+            </div>
+            <div class="task-body">
+              <div class="task-details">
+                <div class="task-priority"></div>
+                <p class="task-desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultrices ipsum ex, ac vehicula ex auctor vel. Aliquam nec nibh.
+                </p>
+                <div class="task-actions">
+                  <label class="completion-indicator">
+                    Complete
+                    <input type="checkbox" class="hidden-checkbox">
+                    <div class="completion-checkbox">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  </label>
+                  <button type="button" class="delete-button">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="task high-prio">
+            <div class="task-header">
+              <div class="handle">
+                <i class="fas fa-thumbtack"></i>
+              </div>
+              <div class="task-header-content">             
+                <h3 class="task-name">
+                  Second task (urgent)
+                </h3>
+                <div class="task-info">
+                  <div class="task-due-date">08/09/2019</div>
+                  <button type="button" class="details-toggler"></button>
+                </div>
+              </div>
+            </div>
+            <div class="task-body">
+              <div class="task-details">
+                <div class="task-priority"></div>
+                <p class="task-desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultrices ipsum ex, ac vehicula ex auctor vel. Aliquam nec nibh.
+                </p>
+                <div class="task-actions">
+                  <label class="completion-indicator">
+                    Complete
+                    <input type="checkbox" class="hidden-checkbox">
+                    <div class="completion-checkbox">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  </label>
+                  <button type="button" class="delete-button">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="task low-prio">
+            <div class="task-header">
+              <div class="handle">
+                <i class="fas fa-thumbtack"></i>
+              </div>
+              <div class="task-header-content">             
+                <h3 class="task-name">
+                  Third task (low prio)
+                </h3>
+                <div class="task-info">
+                  <div class="task-due-date">08/09/2018</div>
+                  <button type="button" class="details-toggler"></button>
+                </div>
+              </div>
+            </div>
+            <div class="task-body">
+              <div class="task-details">
+                <div class="task-priority"></div>
+                <p class="task-desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultrices ipsum ex, ac vehicula ex auctor vel. Aliquam nec nibh.
+                </p>
+                <div class="task-actions">
+                  <label class="completion-indicator">
+                    Complete
+                    <input type="checkbox" class="hidden-checkbox">
+                    <div class="completion-checkbox">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  </label>
+                  <button type="button" class="delete-button">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <script src="assets/main.js"></script>
   </body>
 </html>
