@@ -1,6 +1,6 @@
 let index = 1
 
-const taskFactory = (name, desc, dueDate, priority, projectId, complete = false) => {
+const taskFactory = (name, desc, dueDate, priority, projectId = null, complete = false) => {
   const id = index ++
 
   return { id, name, desc, dueDate, priority, projectId, complete }
