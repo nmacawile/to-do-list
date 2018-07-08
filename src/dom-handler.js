@@ -1,12 +1,10 @@
+import Lib from "./dom-library"
 const DOMHandler = (() => {
   const createProject = project => {
-    const list = document.querySelector(".sidebar-list")
-    const element = document.createElement("li")
-    const link = document.createElement("a")
-    link.href = "#"
+    const list = Lib.find(".sidebar-list")
+    const element = Lib.create("li")
+    const link = Lib.create("a", { href: "#", classes: "sidebar-link", text: project.name })
     link.dataset.id = project.id
-    link.className = "sidebar-link"
-    link.appendChild(document.createTextNode(project.name))
     element.appendChild(link)
     list.prepend(element)
   }
