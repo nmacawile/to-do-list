@@ -4,9 +4,21 @@ const projectFactory = name => {
   const tasks = []
   
   const id = index ++
+  
+  const contains = task => tasks.find(content => content.id === task.id)
 
   const add = task => {
-    tasks.push(task)
+    if (!contains(task)) {
+      task.projectId = id
+      tasks.push(task)
+    }
+  }
+  
+  const remove = task => {
+    const taskIndex = tasks.indexOf(task)
+    if (taskIndex !== -1) {
+      taskIndex.splice(taskIndex, 1)
+    }
   }
 
   return { id, name, tasks, add }
