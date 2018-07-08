@@ -1,6 +1,6 @@
 let index = 1
 
-const projectFactory = (name) => {
+const projectFactory = name => {
   const tasks = []
   
   const id = index ++
@@ -9,13 +9,10 @@ const projectFactory = (name) => {
     tasks.push(task)
   }
 
-  const project = { id, name, tasks, add }
-
-  return project
+  return { id, name, tasks, add }
 }
 
 const Project = (() => {
-
   const list = []
 
   const build = name => projectFactory(name)
