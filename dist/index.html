@@ -12,14 +12,14 @@
   <body>
     <div id="new-project-modal" class="modal-background hidden" style="display: none;">
       <div class="modal-wrapper">
-        <form id="new-project-form" class="modal">
+        <form id="new-project-form" name="project" class="modal">
           <div class="modal-header">
             <h3 class="modal-heading">New Project</h3>
             <button type="button" id="close-project-modal" class="close-modal-button">&#10006</button>
           </div>
           <div class="modal-body">
             <label for="project-name-textbox">Name</label>
-            <input type="text" id="project-name-textbox" autocomplete="off" required>
+            <input type="text" id="project-name-textbox" name="name" autocomplete="off" required>
           </div>
           <div class="modal-footer">
             <button type="submit" class="modal-button">Create Project</button>
@@ -28,27 +28,26 @@
       </div>
     </div>
 
-
     <div id="new-task-modal" class="modal-background hidden" style="display: none;">
       <div class="modal-wrapper">
-        <form id="new-task-form" class="modal">
+        <form id="new-task-form" name="task" class="modal">
           <div class="modal-header">
             <h3 class="modal-heading">New Task</h3>
             <button type="button" id="close-task-modal" class="close-modal-button">&#10006</button>
           </div>
           <div class="modal-body">
             <label for="name-textbox">Name</label>
-            <input type="text" id="name-textbox" autocomplete="off" required>
+            <input type="text" id="name-textbox" name="name" autocomplete="off" required>
 
             <label for="description-textbox">Description</label>
-            <textarea id="description-textbox" maxlength="200" optional></textarea>
+            <textarea id="description-textbox" name="description" maxlength="200" optional></textarea>
 
             <label for="due-date-field">Due date</label>
-            <input type="date" id="due-date-field" required>
+            <input type="date" id="due-date-field" name="due_date" required>
             
             <label for="priority-slider">Priority: <span id="priority-value" class="normal-prio-color">Normal</span></label>
             <div class="slider-wrapper">
-              <input type="range" id="priority-slider" min="1" max="3" value="2">             
+              <input type="range" id="priority-slider" name="priority" min="1" max="3" value="2">             
             </div>
           </div>
           <div class="modal-footer">
