@@ -8,7 +8,7 @@ menuButton.addEventListener('click', e => {
   sidebar.classList.toggle("collapsed")
 })
 
-import Sortable from "sortablejs"
+import Sortable from "./Sortable.min"
 // SORTABLE LIST
 const sortable = Sortable.create(document.querySelector(".task-list"), {
   animation: 150,
