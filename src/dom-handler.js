@@ -101,7 +101,13 @@ const DOMHandler = (() => {
     menuButton.classList.remove("open")
   }
   
-  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar }
+  const updateProjectTitle = project => {
+    Lib.find(".project-name u").textContent = project.name
+    Lib.findAll(".sidebar-link").forEach(link => link.classList.remove("active-sidebar-link"))
+    Lib.find(`[data-id="${project.id}"]`).classList.add("active-sidebar-link")
+  }
+  
+  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
 })()
 
 export default DOMHandler

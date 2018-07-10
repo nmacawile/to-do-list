@@ -1,6 +1,16 @@
 const DOMLibrary = (() => {
   const find = selector => document.querySelector(selector)
   
+  const findAll = selector => document.querySelectorAll(selector)
+  
+  const findAncestor = (obj, ancestorSelector) => {
+    let ancestor = obj
+    while (ancestor.parentElement && !ancestor.classList.contains(ancestorSelector)) {
+      ancestor = ancestor.parentElement
+    }
+    return ancestor
+  }
+  
   const createText = text => document.createTextNode(text)
   
   const create = (tag, options = { id: null, classes: null, text: null }) => {
@@ -40,7 +50,17 @@ const DOMLibrary = (() => {
     }
   }
   
-  return { find, createText, create }
+  const attachEvent = (selector, func, action = 'click', dynamic = false) => { 
+    if (!dynamic) 
+      find(selector).addEventListener(action, func)
+    else
+      document.addEventListener(action, e => {
+        if (e.target && e.target.classList.contains(selector.substring(1, selector.length)))
+          func(e)
+      })
+  }
+  
+  return { find, findAll, findAncestor, createText, create, attachEvent }
 })()
 
 export default DOMLibrary

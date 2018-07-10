@@ -25,6 +25,7 @@ const projectFactory = name => {
   const newTask = (name, desc, dueDate, priority, complete) => {
     const task = Task.create(name, desc, dueDate, priority, id, complete)
     add(task)
+    return task
   }
 
   return { id, name, tasks, add, newTask }
