@@ -25,13 +25,14 @@ taskForm.addEventListener('submit', e => {
 })
 
 document.addEventListener('click', e => {
-  if (e.target && e.target.dataset.id)
+  if (e.target && e.target.classList.contains("sidebar-link"))
     loadProjectData(e.target.dataset.id)
 })
 
 const generateProject = name => {
   let project = Project.create(name)
   DOMHandler.createProject(project)
+  loadProjectData(project.id)
   return project
 }
 
@@ -62,6 +63,10 @@ document.addEventListener('change', e => {
 const loadProjectData = id => {
   let project = Project.find(id)
   Project.active = project
+  document.querySelector(".project-name u").textContent = project.name
+  document.querySelectorAll(".sidebar-link").forEach(link => link.classList.remove("active-sidebar-link"))
+  document.querySelector(`[data-id="${id}"]`).classList.add("active-sidebar-link")
+  DOMHandler.closeSidebar()
   loadTasks(project)
 }
 
@@ -82,11 +87,9 @@ let task3= p.newTask("Task3", "description", "yesterday", "1")
 let task4 = p.newTask("Task4", "description", "later", "3")
 
 let q = generateProject("Second Project")
-
-Project.active = q
 let task5 = q.newTask("Task5", "description", "much later", "3")
 let task6 = q.newTask("Task6", "description", "probably never", "2")
 let task7 = q.newTask("Task7", "description", "yesterday", "1")
 let task8 = q.newTask("Task8", "description", "later", "3")
-loadTasks(q)
+loadProjectData(q.id)
   

@@ -6,7 +6,7 @@ const DOMHandler = (() => {
     const link = Lib.create("a", { href: "#", classes: "sidebar-link", text: project.name })
     link.dataset.id = project.id
     element.appendChild(link)
-    list.prepend(element)
+    list.appendChild(element)
   }
   
   const prioClass = prioValue => {
@@ -85,7 +85,21 @@ const DOMHandler = (() => {
     Lib.find(".task-list").innerHTML = ""
   }
   
-  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks }
+  const toggleSidebar = () => {
+    const sidebar = Lib.find(".sidebar")
+    const menuButton = Lib.find(".menu-button")
+    sidebar.classList.toggle("collapsed")
+    menuButton.classList.toggle("open")
+  }
+  
+  const closeSidebar = () => {
+    const sidebar = Lib.find(".sidebar")
+    const menuButton = Lib.find(".menu-button")
+    sidebar.classList.add("collapsed")
+    menuButton.classList.remove("open")
+  }
+  
+  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar }
 })()
 
 export default DOMHandler

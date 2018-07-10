@@ -2,10 +2,8 @@ import DOMHandler from "./dom-handler"
 
 // SHOW/HIDE SIDEBAR TOGGLER
 const menuButton = document.querySelector(".menu-button")
-const sidebar = document.querySelector(".sidebar")
 menuButton.addEventListener('click', e => {
-  menuButton.classList.toggle("open")
-  sidebar.classList.toggle("collapsed")
+  DOMHandler.toggleSidebar()
 })
 
 import Sortable from "./Sortable.min"
