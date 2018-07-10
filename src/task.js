@@ -1,9 +1,9 @@
 let index = 1
 
-const taskFactory = (name, desc, dueDate, priority, projectId = null, complete = false) => {
+const taskFactory = (projectId, name, desc, dueDate, priority, complete = false) => {
   const id = index ++
 
-  return { id, name, desc, dueDate, priority, projectId, complete }
+  return { projectId, id, name, desc, dueDate, priority, complete }
 }
 
 
@@ -12,8 +12,8 @@ const Task = (() => {
   
   const find = id => list.find(task => task.id == id)
 
-  const create = (name, desc, dueDate, priority, projectId , complete) => {
-    const task = taskFactory(name, desc, dueDate, priority, projectId, complete)
+  const create = (projectId, name, desc, dueDate, priority, complete) => {
+    const task = taskFactory(projectId, name, desc, dueDate, priority, complete)
     list.push(task)
     return task
   }
