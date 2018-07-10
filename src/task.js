@@ -12,8 +12,6 @@ const Task = (() => {
   
   const find = id => list.find(task => task.id == id)
 
-  const build = (name, desc, dueDate, priority, projectId, complete) => taskFactory(name, desc, dueDate, priority, projectId, complete)
-
   const create = (name, desc, dueDate, priority, projectId , complete) => {
     const task = taskFactory(name, desc, dueDate, priority, projectId, complete)
     list.push(task)
@@ -21,7 +19,7 @@ const Task = (() => {
   }
 
   return {
-    build, create, find,
+    find, create,
     get all() {
      return list
     } 

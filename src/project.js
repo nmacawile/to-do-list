@@ -37,9 +37,7 @@ const Project = (() => {
   let active
   
   const find = id => list.find(project => project.id == id)
-
-  const build = name => projectFactory(name)
-
+  
   const create = name => {
     const project = projectFactory(name)
     list.push(project)
@@ -47,7 +45,7 @@ const Project = (() => {
   }
 
   return {
-    find, build, create, active,
+    find, create, active,
     get all() {
      return list
     } 
