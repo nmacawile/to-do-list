@@ -77,6 +77,17 @@ const DOMHandler = (() => {
     setTimeout(() => { modalBackground.classList.remove("hidden") }, 10)
   }
   
+  const resetProjectModal = () => {
+    closeModal("#new-project-modal")
+    Lib.find("#new-project-form").reset()
+  }
+  
+  const resetTaskModal = () => {
+    closeModal("#new-task-modal")
+    Lib.find("#new-task-form").reset()
+    resetSliderLabel()
+  }
+  
   const resetSliderLabel = () => {
     const priorityDisplay = Lib.find("#priority-value")
     priorityDisplay.textContent = "Normal"
@@ -107,7 +118,7 @@ const DOMHandler = (() => {
     Lib.find(`[data-id="${project.id}"]`).classList.add("active-sidebar-link")
   }
   
-  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
+  return { createProject, createTask, closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
 })()
 
 export default DOMHandler

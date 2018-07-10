@@ -8,26 +8,15 @@ import Lib from "./dom-library"
 Lib.attachEvent("#new-project-form", e => {
   e.preventDefault()
   generateProject()
-  closeProjectModal()
+  DOMHandler.resetProjectModal()
 }, 'submit')
 
 // NEW TASK FORM
 Lib.attachEvent("#new-task-form", e => {
   e.preventDefault()
   generateTask()
-  closeTaskModal()
+  DOMHandler.resetTaskModal()
 }, 'submit')
-
-const closeProjectModal = () => {
-  DOMHandler.closeModal("#new-project-modal")
-  Lib.find("#new-project-form").reset()
-}
-
-const closeTaskModal = () => {
-  DOMHandler.closeModal("#new-task-modal")
-  Lib.find("#new-task-form").reset()
-  DOMHandler.resetSliderLabel()
-}
 
 // LOAD PROJECT
 Lib.attachEvent(".sidebar-link", e => loadProjectData(e.target.dataset.id), 'click', true)
@@ -46,17 +35,20 @@ Lib.attachEvent(".hidden-checkbox", e => {
   }
 }, 'change', true)
 
+// CREATE PROJECT
 const generateProject = () => {
   let project = Project.create(document.forms["project"]["name"].value)
   DOMHandler.createProject(project)
   loadProjectData(project.id)
 }
 
+// CREATE TASK
 const generateTask = () => {
   let task = Project.active.newTask(...taskFormData())
   DOMHandler.createTask(task)
 }
 
+// RETRIEVE TASK FORM DATA
 const taskFormData = () => {
   const name = document.forms["task"]["name"].value
   const desc = document.forms["task"]["description"].value
@@ -65,6 +57,7 @@ const taskFormData = () => {
   return [name, desc, dueDate, priority]
 }
 
+// LOAD PROJECT 
 const loadProjectData = id => {
   let project = Project.find(id)
   Project.active = project
@@ -73,6 +66,7 @@ const loadProjectData = id => {
   DOMHandler.closeSidebar()
 }
 
+// LOAD TASKS
 const loadTasks = project => {
   DOMHandler.clearTasks()
   project.tasks.forEach(task => DOMHandler.createTask(task))
