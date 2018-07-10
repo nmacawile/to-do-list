@@ -85,10 +85,12 @@ const DOMHandler = (() => {
   
   const hideProjectPanel = () => {
     Lib.find(".project").style.display = "none"
+    Lib.findAll(".project button").forEach(btn => btn.disabled = true)
   }
   
   const showProjectPanel = () => {
     Lib.find(".project").style.display = "block"
+    Lib.findAll(".project button").forEach(btn => btn.disabled = false)
   }
 
   const closeModal = modalSelector => {
