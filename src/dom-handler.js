@@ -17,7 +17,14 @@ const DOMHandler = (() => {
   
   const createTask = task => {
     const list = Lib.find(".task-list")
-    const element = Lib.create("li", { classes: ["task", prioClass(task.priority)] })
+    let classes = ["task", prioClass(task.priority)]
+    if (task.complete) {
+      classes.push("complete")
+       
+    }
+    
+    const element = Lib.create("li", { classes: classes  })
+    element.dataset["task_id"] = task.id
     const header = Lib.create("div", { classes: "task-header" })
     const handle = Lib.create("div", { classes: "handle" })
     const handleIcon = Lib.create("i", { classes: "fas fa-thumbtack" })
@@ -32,7 +39,7 @@ const DOMHandler = (() => {
     const desc = Lib.create("p", { classes: "task-desc", text: task.desc })
     const actions = Lib.create("div", { classes: "task-actions" })
     const completionIndicator = Lib.create("label", { classes: "completion-indicator", text: "Complete" })
-    const checkbox = Lib.create("input", { classes: "hidden-checkbox", type: "checkbox" })
+    const checkbox = Lib.create("input", { classes: "hidden-checkbox", type: "checkbox", checked: task.complete })
     const overlayCheckbox = Lib.create("div", { classes: "completion-checkbox" })
     const check = Lib.create("i", { classes: "fas fa-check" })
     const deleteBtn = Lib.create("button", { classes: "delete-button", type: "button", text: "Delete" })
@@ -74,7 +81,11 @@ const DOMHandler = (() => {
     priorityDisplay.className = "normal-prio-color"
   }
   
-  return { createProject, createTask, closeModal, openModal, resetSliderLabel }
+  const clearTasks = () => {
+    Lib.find(".task-list").innerHTML = ""
+  }
+  
+  return { createProject, createTask, closeModal, openModal, resetSliderLabel, clearTasks }
 })()
 
 export default DOMHandler

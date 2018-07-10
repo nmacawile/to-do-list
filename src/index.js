@@ -6,9 +6,7 @@ import DOMHandler from "./dom-handler"
 const projectForm = document.querySelector("#new-project-form")
 projectForm.addEventListener('submit', e => {
   e.preventDefault()
-  const name = document.forms["project"]["name"].value
-  let project = Project.create(name)
-  DOMHandler.createProject(project)
+  generateProject(document.forms["project"]["name"].value)
   DOMHandler.closeModal(document.querySelector("#new-project-modal"))
   projectForm.reset()
 })
@@ -20,10 +18,75 @@ taskForm.addEventListener('submit', e => {
   const desc = document.forms["task"]["description"].value
   const dueDate = document.forms["task"]["due_date"].value
   const priority = document.forms["task"]["priority"].value
-  let task = Task.create(name, desc, dueDate, priority)
-  DOMHandler.createTask(task)
+  generateTask(name, desc, dueDate, priority)
   DOMHandler.closeModal(document.querySelector("#new-task-modal"))
   taskForm.reset()
   DOMHandler.resetSliderLabel()
 })
 
+document.addEventListener('click', e => {
+  if (e.target && e.target.dataset.id)
+    loadProjectData(e.target.dataset.id)
+})
+
+const generateProject = name => {
+  let project = Project.create(name)
+  DOMHandler.createProject(project)
+  return project
+}
+
+const generateTask = (name, desc, dueDate, priority) => {
+  let task = Task.create(name, desc, dueDate, priority)
+  Project.active.add(task)
+  console.log(task)
+  DOMHandler.createTask(task)
+  return task
+}
+
+// COMPLETION STATUS TOGGLER
+document.addEventListener('change', e => {
+  if(e.target && e.target.classList.contains("hidden-checkbox") && e.target.checked) {
+    let taskDOM = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
+    let taskId = taskDOM.dataset["task_id"]
+    Task.find(taskId).complete = true
+    taskDOM.classList.add("complete")
+  } 
+  else if(e.target && e.target.classList.contains("hidden-checkbox") && !e.target.checked){
+    let taskDOM = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
+    let taskId = taskDOM.dataset["task_id"]
+    Task.find(taskId).complete = true
+    taskDOM.classList.remove("complete")
+  }   
+})
+
+const loadProjectData = id => {
+  let project = Project.find(id)
+  Project.active = project
+  loadTasks(project)
+}
+
+const loadTasks = project => {
+  DOMHandler.clearTasks()
+  project.tasks.forEach(task => {
+    DOMHandler.createTask(task)
+  })
+}
+
+
+let p = generateProject("Default Project")
+Project.active = p
+
+let task1 = p.newTask("Task1", "description", "later", "3", true)
+let task2 = p.newTask("Task2", "description", "later", "2", "false")
+let task3= p.newTask("Task3", "description", "yesterday", "1")
+let task4 = p.newTask("Task4", "description", "later", "3")
+
+let q = generateProject("Second Project")
+
+Project.active = q
+let task5 = q.newTask("Task5", "description", "much later", "3")
+let task6 = q.newTask("Task6", "description", "probably never", "2")
+let task7 = q.newTask("Task7", "description", "yesterday", "1")
+let task8 = q.newTask("Task8", "description", "later", "3")
+loadTasks(q)
+  

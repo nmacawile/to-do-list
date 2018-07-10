@@ -24,18 +24,6 @@ document.addEventListener('click', e => {
   }
 })
 
-// COMPLETION STATUS TOGGLER
-document.addEventListener('change', e => {
-  if(e.target && e.target.classList.contains("hidden-checkbox") && e.target.checked) {
-    let task = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
-    task.classList.add("complete")
-  } 
-  else if(e.target && e.target.classList.contains("hidden-checkbox") && !e.target.checked){
-    let task = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
-    task.classList.remove("complete")
-  }   
-})
-
 // SLIDER TEXT DISPLAY
 const slider = document.querySelector("#priority-slider")
 const priorityDisplay = document.querySelector("#priority-value")
