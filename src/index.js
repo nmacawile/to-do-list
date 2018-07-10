@@ -7,7 +7,7 @@ const projectForm = document.querySelector("#new-project-form")
 projectForm.addEventListener('submit', e => {
   e.preventDefault()
   generateProject(document.forms["project"]["name"].value)
-  DOMHandler.closeModal(document.querySelector("#new-project-modal"))
+  DOMHandler.closeModal("#new-project-modal")
   projectForm.reset()
 })
 
@@ -19,7 +19,7 @@ taskForm.addEventListener('submit', e => {
   const dueDate = document.forms["task"]["due_date"].value
   const priority = document.forms["task"]["priority"].value
   generateTask(name, desc, dueDate, priority)
-  DOMHandler.closeModal(document.querySelector("#new-task-modal"))
+  DOMHandler.closeModal("#new-task-modal")
   taskForm.reset()
   DOMHandler.resetSliderLabel()
 })

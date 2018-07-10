@@ -65,12 +65,14 @@ const DOMHandler = (() => {
     overlayCheckbox.appendChild(check)
   }
 
-  const closeModal = modalBackground => {
+  const closeModal = modalSelector => {
+    let modalBackground = Lib.find(modalSelector)
     setTimeout(() => { modalBackground.style.display = "none" }, 200)
     modalBackground.classList.add("hidden")
   }
   
-  const openModal = modalBackground => {
+  const openModal = modalSelector => {
+    let modalBackground = Lib.find(modalSelector)
     modalBackground.style.display = "flex"
     setTimeout(() => { modalBackground.classList.remove("hidden") }, 10)
   }

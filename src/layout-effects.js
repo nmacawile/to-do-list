@@ -27,58 +27,40 @@ const slider = document.querySelector("#priority-slider")
 const priorityDisplay = document.querySelector("#priority-value")
 
 slider.addEventListener('change', e => {
-  let priorityValue = parseInt(slider.value)
-
-  let text
-  let prioClass
-  switch(priorityValue) {
-  case 1:
-    text = "Low"
-    prioClass = "low-prio-color"
-    break;
-  case 3:
-    text = "High"
-    prioClass = "high-prio-color"   
-    break;
-  default: 
-    text = "Normal"
-    prioClass = "normal-prio-color"
-  }
-
-  priorityDisplay.textContent = text
-  priorityDisplay.className = prioClass
+  let priorityValue = parseInt(slider.value) - 1
+  let prioLevels = ["Low", "Normal" ,"High"]
+  priorityDisplay.textContent = prioLevels[priorityValue]
+  priorityDisplay.className = prioLevels[priorityValue].toLowerCase() + "-prio-color"
 })
 
 // OPEN AND CLOSE MODALS
 
 // TASK MODAL
 const closeTaskModalButton = document.querySelector("#close-task-modal")
-const taskModalBackground = document.querySelector("#new-task-modal")
 const newTaskButton = document.querySelector(".new-task-button")
 
 // CLOSE TASK MODAL
 closeTaskModalButton.addEventListener('click', e => {
   e.preventDefault()
-  DOMHandler.closeModal(taskModalBackground)
+  DOMHandler.closeModal("#new-task-modal")
 })
 
 // OPEN TASK MODAL
 newTaskButton.addEventListener('click', e => {
-  DOMHandler.openModal(taskModalBackground)
+  DOMHandler.openModal("#new-task-modal")
 })
 
 // PROJECT MODAL
 const closeProjectModalButton = document.querySelector("#close-project-modal")
-const projectModalBackground = document.querySelector("#new-project-modal")
 const newProjectButton = document.querySelector(".new-project-button")
 
 // CLOSE PROJECT MODAL
 closeProjectModalButton.addEventListener('click', e => {
   e.preventDefault()
-  DOMHandler.closeModal(projectModalBackground)
+  DOMHandler.closeModal("#new-project-modal")
 })
 
 // OPEN PROJECT MODAL
 newProjectButton.addEventListener('click', e => {
-  DOMHandler.openModal(projectModalBackground)
+  DOMHandler.openModal("#new-project-modal")
 })
