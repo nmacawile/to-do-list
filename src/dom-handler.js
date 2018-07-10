@@ -71,6 +71,25 @@ const DOMHandler = (() => {
     const task = Lib.find(`[data-task_id='${id}']`)
     list.removeChild(task)
   }
+  
+  const destroyProject = id => {
+    const list = Lib.find(".sidebar-list")
+    const project = Lib.find(`[data-id='${id}']`).parentElement
+    list.removeChild(project)
+  }
+  
+  const clearProjectPanel = () => {
+    clearTasks()
+    Lib.find(".project-name u").textContent = "No project"
+  }
+  
+  const hideProjectPanel = () => {
+    Lib.find(".project").style.display = "none"
+  }
+  
+  const showProjectPanel = () => {
+    Lib.find(".project").style.display = "block"
+  }
 
   const closeModal = modalSelector => {
     let modalBackground = Lib.find(modalSelector)
@@ -125,7 +144,8 @@ const DOMHandler = (() => {
     Lib.find(`[data-id="${project.id}"]`).classList.add("active-sidebar-link")
   }
   
-  return { createProject, createTask, destroyTask, closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
+  return { createProject, createTask, destroyTask, destroyProject, clearProjectPanel, hideProjectPanel, showProjectPanel, 
+           closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
 })()
 
 export default DOMHandler

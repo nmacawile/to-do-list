@@ -16,10 +16,11 @@ const Task = (() => {
   
   const find = id => list.find(task => task.id == id)
   
-  const destroy = id => { 
-    const task = find(id)
-    task.project().remove(task)
-    const taskIndex = list.indexOf(find(id))
+  const destroy = taskId => { 
+    let task
+    task = (typeof taskId === "string" || typeof taskId === "number") ? find(taskId) : taskId
+    if (task.projectId) task.project().remove(task)
+    const taskIndex = list.indexOf(task)
     list.splice(taskIndex, 1)
   }
 

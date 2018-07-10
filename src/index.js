@@ -14,8 +14,12 @@ Lib.attachEvent("#new-project-form", e => {
 // NEW TASK FORM
 Lib.attachEvent("#new-task-form", e => {
   e.preventDefault()
-  generateTask()
-  DOMHandler.resetTaskModal()
+  if (Project.active) {
+    generateTask()
+    DOMHandler.resetTaskModal()
+  }
+  else alert("No project is loaded. Please create a project first.")
+  
 }, 'submit')
 
 // LOAD PROJECT
@@ -34,6 +38,16 @@ Lib.attachEvent(".hidden-checkbox", e => {
     taskDOM.classList.remove("complete")
   }
 }, 'change', true)
+
+// DESTROY PROJECT
+Lib.attachEvent(".delete-project-button", e => {
+  if (Project.active && confirm('Are you sure you want to delete this project and all of its tasks?')) {
+    const id = Project.active.id
+    Project.destroyActive()
+    tryLoadingOtherProject()
+    DOMHandler.destroyProject(id)
+  }
+})
 
 // DESTROY TASK
 Lib.attachEvent(".delete-task-button", e => {
@@ -70,9 +84,20 @@ const taskFormData = () => {
 const loadProjectData = id => {
   let project = Project.find(id)
   Project.active = project
+  DOMHandler.showProjectPanel()
   loadTasks(project)
   DOMHandler.updateProjectTitle(project)
   DOMHandler.closeSidebar()
+}
+
+// LOAD ANOTHER PROJECT (AFTER DELETING CURRENT ACTIVE)
+const tryLoadingOtherProject = () => {
+  if (Project.all.length > 0)
+    loadProjectData(Project.all[0].id)
+  else {
+    DOMHandler.hideProjectPanel()
+    DOMHandler.clearProjectPanel()
+  }
 }
 
 // LOAD TASKS
