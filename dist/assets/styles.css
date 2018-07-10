@@ -596,7 +596,7 @@ body {
   color: #fff;
 }
 
-.delete-button {
+.delete-task-button {
   color: inherit;
   line-height: var(--baseline);
   padding: 0;
@@ -605,7 +605,7 @@ body {
   cursor: pointer;
 }
 
-.delete-button:hover {
+.delete-task-button:hover {
   color: #dc3545;
 }
 

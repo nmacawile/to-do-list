@@ -42,7 +42,8 @@ const DOMHandler = (() => {
     const checkbox = Lib.create("input", { classes: "hidden-checkbox", type: "checkbox", checked: task.complete })
     const overlayCheckbox = Lib.create("div", { classes: "completion-checkbox" })
     const check = Lib.create("i", { classes: "fas fa-check" })
-    const deleteBtn = Lib.create("button", { classes: "delete-button", type: "button", text: "Delete" })
+    const deleteBtn = Lib.create("button", { classes: "delete-task-button", type: "button", text: "Delete" })
+    deleteBtn.dataset["target_task_id"] = task.id
     
     list.appendChild(element)
     element.appendChild(header)
@@ -63,6 +64,12 @@ const DOMHandler = (() => {
     completionIndicator.appendChild(checkbox)
     completionIndicator.appendChild(overlayCheckbox)
     overlayCheckbox.appendChild(check)
+  }
+  
+  const destroyTask = id => {
+    const list = Lib.find(".task-list")
+    const task = Lib.find(`[data-task_id='${id}']`)
+    list.removeChild(task)
   }
 
   const closeModal = modalSelector => {
@@ -118,7 +125,7 @@ const DOMHandler = (() => {
     Lib.find(`[data-id="${project.id}"]`).classList.add("active-sidebar-link")
   }
   
-  return { createProject, createTask, closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
+  return { createProject, createTask, destroyTask, closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
 })()
 
 export default DOMHandler

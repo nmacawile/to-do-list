@@ -18,7 +18,7 @@ const projectFactory = name => {
   const remove = task => {
     const taskIndex = tasks.indexOf(task)
     if (taskIndex !== -1) {
-      taskIndex.splice(taskIndex, 1)
+      tasks.splice(taskIndex, 1)
     }
   }
   
@@ -28,7 +28,7 @@ const projectFactory = name => {
     return task
   }
 
-  return { id, name, tasks, add, newTask }
+  return { id, name, tasks, add, remove, newTask }
 }
 
 const Project = (() => {

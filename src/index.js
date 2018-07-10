@@ -35,6 +35,15 @@ Lib.attachEvent(".hidden-checkbox", e => {
   }
 }, 'change', true)
 
+// DESTROY TASK
+Lib.attachEvent(".delete-task-button", e => {
+  if (confirm('Are you sure you want to delete this task?')) {
+    const id = e.target.dataset["target_task_id"]
+    Task.destroy(id)
+    DOMHandler.destroyTask(id)
+  }
+}, 'click', true)
+
 // CREATE PROJECT
 const generateProject = () => {
   let project = Project.create(document.forms["project"]["name"].value)
