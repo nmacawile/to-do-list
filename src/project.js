@@ -1,3 +1,4 @@
+import Task from "./task"
 let index = 1
 
 const projectFactory = name => {
@@ -20,12 +21,21 @@ const projectFactory = name => {
       taskIndex.splice(taskIndex, 1)
     }
   }
+  
+  const newTask = (name, desc, dueDate, priority, complete) => {
+    const task = Task.create(name, desc, dueDate, priority, id, complete)
+    add(task)
+  }
 
-  return { id, name, tasks, add }
+  return { id, name, tasks, add, newTask }
 }
 
 const Project = (() => {
   const list = []
+  
+  let active
+  
+  const find = id => list.find(project => project.id == id)
 
   const build = name => projectFactory(name)
 
@@ -36,7 +46,7 @@ const Project = (() => {
   }
 
   return {
-    build, create,
+    find, build, create, active,
     get all() {
      return list
     } 
