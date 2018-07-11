@@ -18,7 +18,7 @@ document.addEventListener('click', e => {
 const slider = document.querySelector("#priority-slider")
 const priorityDisplay = document.querySelector("#priority-value")
 
-slider.addEventListener('change', e => {
+slider.addEventListener('input', e => {
   let priorityValue = parseInt(slider.value) - 1
   let prioLevels = ["Low", "Normal" ,"High"]
   priorityDisplay.textContent = prioLevels[priorityValue]
