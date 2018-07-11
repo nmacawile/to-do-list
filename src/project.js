@@ -6,8 +6,10 @@ const projectFactory = name => {
   
   const id = index ++
   
-  const contains = task => tasks.find(content => content.id === task.id)
-
+  const contains = task => tasks.find(content => content.id == task.id)
+  
+  const findTask = taskId => tasks.find(content => content.id == taskId)
+  
   const add = task => {
     if (!contains(task)) {
       task.projectId = id
@@ -24,18 +26,17 @@ const projectFactory = name => {
   
   const removeAll = () => {
     tasks.forEach(task => task.projectId = null)
-    for(let i = 0; i < tasks.length; i++)
-      Task.destroy(tasks[i].id)
     tasks.length = 0
   }
   
   const newTask = (name, desc, dueDate, priority, complete) => {
-    const task = Task.create(id, name, desc, dueDate, priority, complete)
+    const task = Task(id, name, desc, dueDate, priority, complete)
     add(task)
     return task
   }
 
-  return { id, name, tasks, add, remove, removeAll, newTask }
+  let project = { id, name, tasks, findTask, add, remove, removeAll, newTask }
+  return project
 }
 
 const Project = (() => {

@@ -1,6 +1,5 @@
 import LayoutEffects from "./layout-effects"
 import Project from "./project"
-import Task from "./task"
 import DOMHandler from "./dom-handler"
 import Lib from "./dom-library"
 
@@ -30,11 +29,11 @@ Lib.attachEvent(".hidden-checkbox", e => {
   let taskDOM = Lib.findAncestor(e.target, "task")
   let taskId = taskDOM.dataset["task_id"]
   if(e.target.checked) {
-    Task.find(taskId).complete = true
+    Project.active.findTask(taskId).complete = true
     taskDOM.classList.add("complete")
   } 
   else if(!e.target.checked){
-    Task.find(taskId).complete = false
+    Project.active.findTask(taskId).complete = false
     taskDOM.classList.remove("complete")
   }
 }, 'change', true)
@@ -53,7 +52,7 @@ Lib.attachEvent(".delete-project-button", e => {
 Lib.attachEvent(".delete-task-button", e => {
   if (confirm('Are you sure you want to delete this task?')) {
     const id = e.target.dataset["target_task_id"]
-    Task.destroy(id)
+    Project.active.remove(id)
     DOMHandler.destroyTask(id)
   }
 }, 'click', true)
@@ -76,7 +75,7 @@ const taskFormData = () => {
   const name = document.forms["task"]["name"].value
   const desc = document.forms["task"]["description"].value
   const dueDate = document.forms["task"]["due_date"].value
-  const priority = document.forms["task"]["priority"].value
+  const priority = parseInt(document.forms["task"]["priority"].value)
   return [name, desc, dueDate, priority]
 }
 
