@@ -3,9 +3,9 @@ const DOMLibrary = (() => {
   
   const findAll = selector => document.querySelectorAll(selector)
   
-  const findAncestor = (obj, ancestorSelector) => {
+  const findAncestor = (obj, ancestorClass) => {
     let ancestor = obj
-    while (ancestor.parentElement && !ancestor.classList.contains(ancestorSelector)) {
+    while (ancestor.parentElement && !ancestor.classList.contains(ancestorClass)) {
       ancestor = ancestor.parentElement
     }
     return ancestor

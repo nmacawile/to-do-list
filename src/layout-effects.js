@@ -1,58 +1,38 @@
 import DOMHandler from "./dom-handler"
+import Lib from "./dom-library"
 
 // SHOW/HIDE SIDEBAR TOGGLER
-const menuButton = document.querySelector(".menu-button")
-menuButton.addEventListener('click', e => {
-  DOMHandler.toggleSidebar()
-})
+Lib.attachEvent(".menu-button", DOMHandler.toggleSidebar)
 
 // SHOW/HIDE DETAILS TOGGLER
-document.addEventListener('click', e => {
-  if (e.target && e.target.classList.contains("details-toggler")) {
-    let task = e.target.parentElement.parentElement.parentElement.parentElement
-    task.classList.toggle("show")
-  }
-})
+Lib.attachEvent(".details-toggler", e => {
+  let task = Lib.findAncestor(e.target, "task")
+  task.classList.toggle("show")
+}, 'click', true)
 
 // SLIDER TEXT DISPLAY
-const slider = document.querySelector("#priority-slider")
-const priorityDisplay = document.querySelector("#priority-value")
-
-slider.addEventListener('input', e => {
-  let priorityValue = parseInt(slider.value) - 1
+Lib.attachEvent("#priority-slider", e => {
+  let priorityValue = parseInt(e.target.value) - 1
   let prioLevels = ["Low", "Normal" ,"High"]
+  const priorityDisplay = Lib.find("#priority-value")
   priorityDisplay.textContent = prioLevels[priorityValue]
   priorityDisplay.className = prioLevels[priorityValue].toLowerCase() + "-prio-color"
-})
-
-// OPEN AND CLOSE MODALS
-
-// TASK MODAL
-const closeTaskModalButton = document.querySelector("#close-task-modal")
-const newTaskButton = document.querySelector(".new-task-button")
+}, 'input')
 
 // CLOSE TASK MODAL
-closeTaskModalButton.addEventListener('click', e => {
+Lib.attachEvent("#close-task-modal", e => {
   e.preventDefault()
   DOMHandler.closeModal("#new-task-modal")
 })
 
 // OPEN TASK MODAL
-newTaskButton.addEventListener('click', e => {
-  DOMHandler.openModal("#new-task-modal")
-})
-
-// PROJECT MODAL
-const closeProjectModalButton = document.querySelector("#close-project-modal")
-const newProjectButton = document.querySelector(".new-project-button")
+Lib.attachEvent(".new-task-button", e => DOMHandler.openModal("#new-task-modal"))
 
 // CLOSE PROJECT MODAL
-closeProjectModalButton.addEventListener('click', e => {
+Lib.attachEvent("#close-project-modal", e => {
   e.preventDefault()
   DOMHandler.closeModal("#new-project-modal")
 })
 
 // OPEN PROJECT MODAL
-newProjectButton.addEventListener('click', e => {
-  DOMHandler.openModal("#new-project-modal")
-})
+Lib.attachEvent(".new-project-button", e => DOMHandler.openModal("#new-project-modal"))
