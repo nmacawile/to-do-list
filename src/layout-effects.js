@@ -6,14 +6,6 @@ menuButton.addEventListener('click', e => {
   DOMHandler.toggleSidebar()
 })
 
-import Sortable from "./Sortable.min"
-// SORTABLE LIST
-const sortable = Sortable.create(document.querySelector(".task-list"), {
-  animation: 150,
-  draggable: ".task",
-  handle: ".handle"
-})
-
 // SHOW/HIDE DETAILS TOGGLER
 document.addEventListener('click', e => {
   if (e.target && e.target.classList.contains("details-toggler")) {

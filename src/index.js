@@ -2,6 +2,7 @@ import LayoutEffects from "./layout-effects"
 import Project from "./project"
 import DOMHandler from "./dom-handler"
 import Lib from "./dom-library"
+import Sortable from "./Sortable.min"
 
 // NEW PROJECT FORM
 Lib.attachEvent("#new-project-form", e => {
@@ -56,6 +57,22 @@ Lib.attachEvent(".delete-task-button", e => {
     DOMHandler.destroyTask(id)
   }
 }, 'click', true)
+
+// SORTABLE TASK LIST
+const sortable = Sortable.create(Lib.find(".task-list"), {
+  animation: 150,
+  delay: 0, 
+  draggable: ".task",
+  dataIdAttr: 'data-task_id',
+  handle: ".handle",
+  onSort: e => sortTasks(e)
+})
+
+// SORT TASKS
+const sortTasks = e => {
+  let item = Project.active.tasks.splice(e.oldIndex, 1)[0]
+  Project.active.tasks.splice(e.newIndex, 0, item)
+}
 
 // CREATE PROJECT
 const generateProject = () => {
