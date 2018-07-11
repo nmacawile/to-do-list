@@ -3,6 +3,9 @@ import Project from "./project"
 import DOMHandler from "./dom-handler"
 import Lib from "./dom-library"
 import Sortable from "./Sortable.min"
+import Storage from "./storage"
+
+let activeProject
 
 // NEW PROJECT FORM
 Lib.attachEvent("#new-project-form", e => {
@@ -14,7 +17,7 @@ Lib.attachEvent("#new-project-form", e => {
 // NEW TASK FORM
 Lib.attachEvent("#new-task-form", e => {
   e.preventDefault()
-  if (Project.active) {
+  if (activeProject) {
     generateTask()
     DOMHandler.resetTaskModal()
   }
@@ -33,21 +36,22 @@ Lib.attachEvent(".hidden-checkbox", e => {
   let taskDOM = Lib.findAncestor(e.target, "task")
   let taskId = taskDOM.dataset["task_id"]
   if(e.target.checked) {
-    Project.active.findTask(taskId).complete = true
+    activeProject.findTask(taskId).complete = true
     taskDOM.classList.add("complete")
   } 
   else if(!e.target.checked){
-    Project.active.findTask(taskId).complete = false
+    activeProject.findTask(taskId).complete = false
     taskDOM.classList.remove("complete")
   }
+  activeProject.save()
 }, 'change', true)
 
 // DESTROY PROJECT
 Lib.attachEvent(".delete-project-button", e => {
-  if (Project.active && confirm('Are you sure you want to delete this project and all of its tasks?')) {
-    const id = Project.active.id
-    Project.destroyActive()
-    tryLoadingOtherProject()
+  if (activeProject && confirm('Are you sure you want to delete this project and all of its tasks?')) {
+    const id = activeProject.id
+    Project.destroy(activeProject)
+    tryLoadingFirstProject()
     DOMHandler.destroyProject(id)
   }
 })
@@ -56,7 +60,7 @@ Lib.attachEvent(".delete-project-button", e => {
 Lib.attachEvent(".delete-task-button", e => {
   if (confirm('Are you sure you want to delete this task?')) {
     const id = e.target.dataset["target_task_id"]
-    Project.active.remove(id)
+    activeProject.remove(id)
     DOMHandler.destroyTask(id)
   }
 }, 'click', true)
@@ -73,8 +77,9 @@ const sortable = Sortable.create(Lib.find(".task-list"), {
 
 // SORT TASKS
 const sortTasks = e => {
-  let item = Project.active.tasks.splice(e.oldIndex, 1)[0]
-  Project.active.tasks.splice(e.newIndex, 0, item)
+  let item = activeProject.tasks.splice(e.oldIndex, 1)[0]
+  activeProject.tasks.splice(e.newIndex, 0, item)
+  activeProject.save()
 }
 
 // CREATE PROJECT
@@ -86,7 +91,7 @@ const generateProject = () => {
 
 // CREATE TASK
 const generateTask = () => {
-  let task = Project.active.newTask(...taskFormData())
+  let task = activeProject.newTask(...taskFormData())
   DOMHandler.createTask(task)
 }
 
@@ -102,7 +107,8 @@ const taskFormData = () => {
 // LOAD PROJECT 
 const loadProjectData = id => {
   let project = Project.find(id)
-  Project.active = project
+  Storage.saveLastOpen(id)
+  activeProject = project
   DOMHandler.showProjectPanel()
   loadTasks(project)
   DOMHandler.updateProjectTitle(project)
@@ -110,9 +116,9 @@ const loadProjectData = id => {
 }
 
 // LOAD ANOTHER PROJECT (AFTER DELETING CURRENT ACTIVE)
-const tryLoadingOtherProject = () => {
-  if (Project.all.length > 0)
-    loadProjectData(Project.all[0].id)
+const tryLoadingFirstProject = () => {
+  if (Project.meta.length > 0)
+    loadProjectData(Project.meta[0].id)
   else {
     DOMHandler.hideProjectPanel()
     DOMHandler.clearProjectPanel()
@@ -125,24 +131,10 @@ const loadTasks = project => {
   project.tasks.forEach(task => DOMHandler.createTask(task))
 }
 
-let p = Project.create("Default Project")
-DOMHandler.createProject(p)
-Project.active = p
 
-p.newTask("Task1", "description", "later", "3", true)
-p.newTask("Task1", "description", "later", "3", true)
-p.newTask("Task2", "description", "later", "2", "false")
-p.newTask("Task3", "description", "yesterday", "1", false)
-p.newTask("Task4", "description", "later", "3")
-
-let q = Project.create("Second Project")
-DOMHandler.createProject(q)
-Project.active =  q
-q.newTask("Task5", "description", "much later", "3")
-q.newTask("Task6", "description", "probably never", "2")
-q.newTask("Task7", "description", "yesterday", "1")
-q.newTask("Task8", "description", "later", "3")
-
-loadProjectData(Project.active.id)
-
+(() => {
+  Project.meta.forEach(project => DOMHandler.createProject(project))
+  const lastOpen = Storage.loadLastOpen()
+  lastOpen ?  loadProjectData(lastOpen) : tryLoadingFirstProject()
+})()
   

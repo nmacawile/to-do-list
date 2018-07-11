@@ -80,7 +80,7 @@ const DOMHandler = (() => {
   
   const clearProjectPanel = () => {
     clearTasks()
-    Lib.find(".project-name u").textContent = "No project"
+    Lib.find(".project-name u").textContent = "[Load a project first]"
   }
   
   const hideProjectPanel = () => {

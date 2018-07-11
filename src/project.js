@@ -1,76 +1,90 @@
 import Task from "./task"
-let index = 1
+import Storage from "./storage"
+
+let index = Storage.loadIndex("project") || 1
+const getIndex = () => {
+  let out = index
+  Storage.saveIndex("project", ++ index)
+  return out
+}
 
 const projectFactory = name => {
+  return projectFunctions(projectData(name))
+}
+
+const projectData = name => {
   let tasks = []
   
-  const id = index ++
+  const id = getIndex()
+
+  return { id, name, tasks }
+}
+
+const projectFunctions = project => {
+  const contains = task => project.tasks.find(content => content.id == task.id)
   
-  const contains = task => tasks.find(content => content.id == task.id)
-  
-  const findTask = taskId => tasks.find(content => content.id == taskId)
+  const findTask = taskId => project.tasks.find(content => content.id == taskId)
   
   const add = task => {
     if (!contains(task)) {
-      task.projectId = id
-      tasks.push(task)
+      task.projectId = project.id
+      project.tasks.push(task)
     }
   }
   
-  const remove = task => {
-    const taskIndex = tasks.indexOf(task)
+  const save = () => Storage.save(project)
+  
+  const destroy = () => Storage.destroy(project.id)
+  
+  const remove = taskId => {
+    const taskIndex = project.tasks.indexOf(findTask(taskId))
     if (taskIndex !== -1) {
-      tasks.splice(taskIndex, 1)
+      project.tasks.splice(taskIndex, 1)
+      save()
     }
   }
   
   const removeAll = () => {
-    tasks.forEach(task => task.projectId = null)
-    tasks.length = 0
+    project.tasks.forEach(task => task.projectId = null)
+    project.tasks.length = 0
   }
   
   const newTask = (name, desc, dueDate, priority, complete) => {
-    const task = Task(id, name, desc, dueDate, priority, complete)
+    const task = Task(project.id, name, desc, dueDate, priority, complete)
     add(task)
+    save()
     return task
   }
-
-  let project = { id, name, tasks, findTask, add, remove, removeAll, newTask }
-  return project
+  
+  return { id: project.id, name: project.name, tasks: project.tasks, findTask, add, remove, removeAll, newTask, save, destroy }
 }
 
 const Project = (() => {
-  const list = []
+  let meta = Storage.loadMeta() || []
   
-  let active
-  
-  const find = id => list.find(project => project.id == id)
-  
-  const destroyActive = () => {
-    let project = Project.active
-    project.removeAll()
-    destroy(project)
-    Project.active = null
+  const saveMeta = () => {
+    Storage.saveMeta(meta)
   }
+  
+  const find = id => projectFunctions(Storage.load(id))
   
   const create = name => {
     const project = projectFactory(name)
-    list.push(project)
+    project.save()
+    meta.push({ id: project.id, name: project.name })
+    saveMeta()
     return project
   }
   
-  const destroy = projectId => {
-    let project
-    project = (typeof projectId === "string" || typeof projectId === "number") ? find(projectId) : projectId
-    const projectIndex = list.indexOf(project)
-    list.splice(projectIndex, 1)
+  const destroy = project => {
+    const projectIndex = meta.indexOf(meta.find(m => m.id === project.id))
+    meta.splice(projectIndex, 1)
+    project.destroy()
+    saveMeta()
   }
 
   return {
-    find, destroyActive, create, active,
-    get all() {
-     return list
-    } 
+    find, create, meta, saveMeta, destroy
   }
 })()
 
