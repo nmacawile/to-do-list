@@ -80,16 +80,14 @@ const DOMHandler = (() => {
   
   const clearProjectPanel = () => {
     clearTasks()
-    Lib.find(".project-name u").textContent = "[Load a project first]"
+    Lib.find(".project-name u").textContent = "[No project loaded]"
   }
   
-  const hideProjectPanel = () => {
-    Lib.find(".project").style.display = "none"
+  const disableProjectPanel = () => {
     Lib.findAll(".project button").forEach(btn => btn.disabled = true)
   }
   
-  const showProjectPanel = () => {
-    Lib.find(".project").style.display = "block"
+  const enableProjectPanel = () => {
     Lib.findAll(".project button").forEach(btn => btn.disabled = false)
   }
 
@@ -146,7 +144,7 @@ const DOMHandler = (() => {
     Lib.find(`[data-id="${project.id}"]`).classList.add("active-sidebar-link")
   }
   
-  return { createProject, createTask, destroyTask, destroyProject, clearProjectPanel, hideProjectPanel, showProjectPanel, 
+  return { createProject, createTask, destroyTask, destroyProject, clearProjectPanel, disableProjectPanel, enableProjectPanel, 
            closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
 })()
 

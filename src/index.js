@@ -21,7 +21,7 @@ Lib.attachEvent("#new-task-form", e => {
     generateTask()
     DOMHandler.resetTaskModal()
   }
-  else alert("No project is loaded. Please create a project first.")
+  else alert("No project is loaded. Please create or load a project first.")
   
 }, 'submit')
 
@@ -109,7 +109,7 @@ const loadProjectData = id => {
   let project = Project.find(id)
   Storage.saveLastOpen(id)
   activeProject = project
-  DOMHandler.showProjectPanel()
+  DOMHandler.enableProjectPanel()
   loadTasks(project)
   DOMHandler.updateProjectTitle(project)
   DOMHandler.closeSidebar()
@@ -120,7 +120,7 @@ const tryLoadingFirstProject = () => {
   if (Project.meta.length > 0)
     loadProjectData(Project.meta[0].id)
   else {
-    DOMHandler.hideProjectPanel()
+    DOMHandler.disableProjectPanel()
     DOMHandler.clearProjectPanel()
   }
 }
