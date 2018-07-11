@@ -23,7 +23,10 @@ Lib.attachEvent("#new-task-form", e => {
 }, 'submit')
 
 // LOAD PROJECT
-Lib.attachEvent(".sidebar-link", e => loadProjectData(e.target.dataset.id), 'click', true)
+Lib.attachEvent(".sidebar-link", e => {
+  e.preventDefault()
+  loadProjectData(e.target.dataset.id)
+}, 'click', true)
 
 // COMPLETION STATUS TOGGLER
 Lib.attachEvent(".hidden-checkbox", e => {
