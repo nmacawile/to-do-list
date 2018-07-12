@@ -1,4 +1,6 @@
 import Lib from "./dom-library"
+import { distanceInWordsToNow, format } from 'date-fns'
+
 const DOMHandler = (() => {
   const createProject = project => {
     const list = Lib.find(".sidebar-list")
@@ -31,10 +33,12 @@ const DOMHandler = (() => {
     const headerContent = Lib.create("div", { classes: "task-header-content" })
     const taskName = Lib.create("h3", { classes: "task-name", text: task.name })
     const taskInfo = Lib.create("div", { classes: "task-info" })
-    const dueDate = Lib.create("div", { classes: "task-due-date", text: task.dueDate })
+    const dueDate = Lib.create("div", { classes: "task-due-date", text: format(task.dueDate, "MMMM DD, YYYY") })
     const detailsToggler = Lib.create("button", { classes: "details-toggler", type: "button" })
     const body = Lib.create("div", { classes: "task-body" })
     const details = Lib.create("div", { classes: "task-details" })
+    const urgency = Lib.create("div", { classes: "task-urgency" })
+    const timeRemaining = Lib.create("div", { classes: "task-remaining-time", text: distanceInWordsToNow(task.dueDate, { addSuffix: true }) })
     const prio = Lib.create("div", { classes: "task-priority" })
     const desc = Lib.create("p", { classes: "task-desc", text: task.desc })
     const actions = Lib.create("div", { classes: "task-actions" })
@@ -56,7 +60,9 @@ const DOMHandler = (() => {
     taskInfo.appendChild(dueDate)
     taskInfo.appendChild(detailsToggler)
     body.appendChild(details)
-    details.appendChild(prio)
+    details.appendChild(urgency)
+    urgency.appendChild(timeRemaining)
+    urgency.appendChild(prio)
     details.appendChild(desc)
     details.appendChild(actions)
     actions.appendChild(completionIndicator)

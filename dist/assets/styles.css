@@ -516,8 +516,21 @@ body {
   background-color: #28a745 !important;
 }
 
-.task-priority {
+.task-urgency {
   font-size: .8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-remaining-time {
+  color: #6c757d;
+}
+
+.task-remaining-time::before {
+  content: "Due: ";
+}
+
+.task-priority {
   color: #007bff;
 }
 

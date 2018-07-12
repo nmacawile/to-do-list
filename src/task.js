@@ -7,8 +7,10 @@ const getIndex = () => {
   return out
 }
 
-const Task = (projectId, name, desc, dueDate, priority, complete = false) => {
+const Task = (projectId, name, desc, dueDateString, priority, complete = false) => {
   const id = getIndex()
+  
+  const dueDate = new Date(dueDateString)
 
   return { id, name, desc, dueDate, priority, complete, projectId }
 }
