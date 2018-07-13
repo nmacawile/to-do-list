@@ -1,7 +1,8 @@
 import Task from "./task"
 import Storage from "./storage"
+import Seeds from "./seeds"
 
-let index = Storage.loadIndex("project") || 1
+let index = Storage.loadIndex("project") || Seeds.projectId()
 const getIndex = () => {
   let out = index
   Storage.saveIndex("project", ++ index)
@@ -54,7 +55,7 @@ const projectFunctions = project => {
 }
 
 const Project = (() => {
-  let meta = Storage.loadMeta() || []
+  let meta = Storage.loadMeta() || Seeds.meta()
   
   const saveMeta = () => {
     Storage.saveMeta(meta)
@@ -76,7 +77,7 @@ const Project = (() => {
     project.destroy()
     saveMeta()
   }
-
+  
   return {
     find, create, meta, saveMeta, destroy
   }
