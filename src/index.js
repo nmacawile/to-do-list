@@ -75,12 +75,21 @@ const sortable = Sortable.create(Lib.find(".task-list"), {
   onSort: e => sortTasks(e)
 })
 
-// SORT TASKS
+// MANUALLY SORT TASKS
 const sortTasks = e => {
   let item = activeProject.tasks.splice(e.oldIndex, 1)[0]
   activeProject.tasks.splice(e.newIndex, 0, item)
   activeProject.save()
 }
+
+// AUTO SORT
+Lib.attachEvent(".sort-button", e => {
+  activeProject.tasks.sort((a, b) => {
+    return a.complete - b.complete || b.priority - a.priority || (b.dueDate < a.dueDate ? 1 : -1)
+  });
+  sortable.sort(activeProject.tasks.map(task => task.id))
+  activeProject.save()
+})
 
 // CREATE PROJECT
 const generateProject = () => {

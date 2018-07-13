@@ -399,6 +399,32 @@ body {
   color: #6c757d !important;
 }
 
+.tasks-heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--baseline);
+}
+
+.tasks-heading {
+  margin-bottom: 0 !important;
+}
+
+.sort-button {
+  padding: 0;
+  border: 0;
+  color: #6c757d;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  color: #6610f2;
+}
+
+.sort-button:disabled {
+  color: #6c757d;
+}
+
 .new-task-button {
   text-align: left;
   line-height: var(--baseline);
@@ -424,7 +450,7 @@ body {
 }
 
 :disabled {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 .new-task-icon {
