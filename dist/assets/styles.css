@@ -201,7 +201,7 @@ body {
   width: 100%;
   max-width: 1140px;
   margin: auto;
-  padding: var(--baseline);
+  padding: 0 var(--baseline);
 }
 
 /* HEADER */
@@ -279,8 +279,8 @@ body {
 .main {
   position: relative;
   display: flex;
-  margin-top: var(--baseline4);
-  min-height: calc(100vh - var(--baseline4));
+  margin-top: var(--baseline2);
+  min-height: calc(100vh - var(--baseline2));
   padding: 0;
   background-color: #fff;
 }
@@ -289,7 +289,7 @@ body {
 
 .sidebar {
   position: fixed;
-  top: var(--baseline4);
+  top: var(--baseline2);
   left: 0;
   z-index: 99;
   width: 100%;
