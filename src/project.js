@@ -27,7 +27,6 @@ const projectFunctions = project => {
   
   const add = task => {
     if (!contains(task)) {
-      task.projectId = project.id
       project.tasks.push(task)
     }
   }
@@ -44,11 +43,6 @@ const projectFunctions = project => {
     }
   }
   
-  const removeAll = () => {
-    project.tasks.forEach(task => task.projectId = null)
-    project.tasks.length = 0
-  }
-  
   const newTask = (name, desc, dueDate, priority, complete) => {
     const task = Task(project.id, name, desc, dueDate, priority, complete)
     add(task)
@@ -56,7 +50,7 @@ const projectFunctions = project => {
     return task
   }
   
-  return { id: project.id, name: project.name, tasks: project.tasks, findTask, add, remove, removeAll, newTask, save, destroy }
+  return { id: project.id, name: project.name, tasks: project.tasks, findTask, add, remove, newTask, save, destroy }
 }
 
 const Project = (() => {
