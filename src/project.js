@@ -2,11 +2,10 @@ import Task from "./task"
 import Storage from "./storage"
 import Seeds from "./seeds"
 
-let index = Storage.loadIndex("project") || Seeds.projectId()
 const getIndex = () => {
-  let out = index
-  Storage.saveIndex("project", ++ index)
-  return out
+  let index = Storage.loadIndex("project") || Seeds.projectId()
+  Storage.saveIndex("project", index + 1)
+  return index
 }
 
 const projectFactory = name => {
