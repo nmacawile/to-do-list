@@ -137,7 +137,7 @@ const tryLoadingFirstProject = () => {
 // LOAD TASKS
 const loadTasks = project => {
   DOMHandler.clearTasks()
-  project.tasks.forEach(task => DOMHandler.createTask(task))
+  project.tasks.reverse().forEach(task => DOMHandler.createTask(task))
 }
 
 

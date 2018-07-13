@@ -27,7 +27,7 @@ const projectFunctions = project => {
   
   const add = task => {
     if (!contains(task)) {
-      project.tasks.push(task)
+      project.tasks.unshift(task)
     }
   }
   

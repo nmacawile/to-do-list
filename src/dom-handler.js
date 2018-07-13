@@ -49,7 +49,7 @@ const DOMHandler = (() => {
     const deleteBtn = Lib.create("button", { classes: "delete-task-button", type: "button", text: "Delete" })
     deleteBtn.dataset["target_task_id"] = task.id
     
-    list.appendChild(element)
+    list.prepend(element)
     element.appendChild(header)
     element.appendChild(body)
     header.appendChild(handle)
