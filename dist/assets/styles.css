@@ -527,7 +527,7 @@ body {
 }
 
 .task-remaining-time::before {
-  content: "Due: ";
+  content: "Due ";
 }
 
 .task-priority {
