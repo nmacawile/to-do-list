@@ -1,5 +1,6 @@
 import DOMHandler from "./dom-handler"
 import Lib from "./dom-library"
+import { format } from 'date-fns'
 
 // SHOW/HIDE SIDEBAR TOGGLER
 Lib.attachEvent(".menu-button", DOMHandler.toggleSidebar)
@@ -27,6 +28,12 @@ Lib.attachEvent("#close-task-modal", e => {
 
 // OPEN TASK MODAL
 Lib.attachEvent(".new-task-button", e => DOMHandler.openModal("#new-task-modal"))
+
+
+Lib.attachEvent(".new-task-button", e => { 
+  DOMHandler.openModal("#new-task-modal")
+  Lib.find("#due-date-field").value = format(new Date(), "YYYY-MM-DD[T]hh:mm")
+})
 
 // CLOSE PROJECT MODAL
 Lib.attachEvent("#close-project-modal", e => {
