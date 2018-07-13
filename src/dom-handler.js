@@ -33,7 +33,7 @@ const DOMHandler = (() => {
     const headerContent = Lib.create("div", { classes: "task-header-content" })
     const taskName = Lib.create("h3", { classes: "task-name", text: task.name })
     const taskInfo = Lib.create("div", { classes: "task-info" })
-    const dueDate = Lib.create("div", { classes: "task-due-date", text: format(task.dueDate, "MMMM DD, YYYY") })
+    const dueDate = Lib.create("div", { classes: "task-due-date", text: format(task.dueDate, "hh:mm a | MMM DD, YYYY") })
     const detailsToggler = Lib.create("button", { classes: "details-toggler", type: "button" })
     const body = Lib.create("div", { classes: "task-body" })
     const details = Lib.create("div", { classes: "task-details" })

@@ -100,7 +100,7 @@ body {
   color: inherit;
 }
 
-.modal-body input[type="text"], .modal-body input[type="date"], .modal-body textarea {
+.modal-body input[type="text"], .modal-body input[type="datetime-local"], .modal-body textarea {
   padding: calc(var(--baseline) / 2);
   margin-bottom: var(--baseline);
   border: 0;
@@ -116,7 +116,7 @@ body {
   max-height: calc(var(--baseline) * 10);
 }
 
-.modal-body input[type="date"] {
+.modal-body input[type="datetime-local"] {
   max-height: var(--baseline2);
 }
 
