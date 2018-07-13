@@ -590,7 +590,9 @@ body {
 }
 
 .task-desc {
-  word-break: break-all;
+  overflow: auto;
+  word-break: break-word;
+  max-height: calc(var(--baseline) * 5);
   margin: 0 0 var(--baseline);
   line-height: var(--baseline);
 }
