@@ -590,6 +590,7 @@ body {
 }
 
 .task-desc {
+  word-break: break-all;
   margin: 0 0 var(--baseline);
   line-height: var(--baseline);
 }
