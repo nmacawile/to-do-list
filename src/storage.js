@@ -23,69 +23,40 @@ const Storage = (() => {
     }
   }
   
-  const save = project => {
+  const saveFunction = (addr, obj) => {
     if (storageAvailable()) {
-      let data = JSON.stringify(project)
-      localStorage.setItem(`to-do.project-${project.id}`, data)
+      let data = JSON.stringify(obj)
+      localStorage.setItem(addr, data)
     }  
   }
   
-  const destroy = projectId => {
-    if (storageAvailable()) localStorage.removeItem(`to-do.project-${projectId}`)
-  }
-  
-  const load = projectId => {
+  const loadFunction = addr => {
     let data
-    if (storageAvailable() && (data = localStorage.getItem(`to-do.project-${projectId}`))) {
+    if (storageAvailable() && (data = localStorage.getItem(addr))) {
       let project = JSON.parse(data)
       return project
     }
   }
   
-  const saveIndex = (model, index) => {
-    if (storageAvailable()) {
-      let data = JSON.stringify(index)
-      localStorage.setItem(`to-do.${model}-index`, data)
-    }
+  const save = project => saveFunction(`to-do.project-${project.id}`, project)
+  
+  const load = projectId => loadFunction(`to-do.project-${projectId}`)
+  
+  const destroy = projectId => {
+    if (storageAvailable()) localStorage.removeItem(`to-do.project-${projectId}`)
   }
   
-   const loadIndex = model => {
-    let data
-    if (storageAvailable() && (data = localStorage.getItem(`to-do.${model}-index`))) {
-      let index = JSON.parse(data)
-      return index
-    }
-  }
+  const saveIndex = (model, index) => saveFunction(`to-do.${model}-index`, index)
   
-  const saveMeta = meta => {
-    if (storageAvailable()) {
-      let data = JSON.stringify(meta)
-      localStorage.setItem(`to-do.meta`, data)
-    }   
-  }
+  const loadIndex = model => loadFunction(`to-do.${model}-index`)
   
-  const loadMeta = () => {
-    let data
-    if (storageAvailable() && (data = localStorage.getItem(`to-do.meta`))) {
-      let meta = JSON.parse(data)
-      return meta
-    }
-  }
+  const saveMeta = meta => saveFunction(`to-do.meta`, meta)
   
-  const saveLastOpen = openProjectId => {
-    if (storageAvailable()) {
-      let data = JSON.stringify(openProjectId)
-      localStorage.setItem(`to-do.open`, data)
-    }   
-  }
+  const loadMeta = () => loadFunction(`to-do.meta`)
   
-  const loadLastOpen = () => {
-    let data
-    if (storageAvailable() && (data = localStorage.getItem(`to-do.open`))) {
-      let openProjectId = JSON.parse(data)
-      return openProjectId
-    }
-  }
+  const saveLastOpen = openProjectId => saveFunction(`to-do.open`, openProjectId)
+  
+  const loadLastOpen = () => loadFunction(`to-do.open`)
   
   return { save, load, saveIndex, loadIndex, saveMeta, loadMeta, destroy, saveLastOpen, loadLastOpen }
 })()
