@@ -12,7 +12,9 @@ const Seeds = (() => {
     const projects = data.map(m => JSON.parse(m))
     projects.forEach(p => Storage.save(p))
     
-    return projects.map(p => { return { id: p.id, name: p.name } })
+    const meta = projects.map(p => { return { id: p.id, name: p.name } })
+    Storage.saveMeta(meta)
+    return meta
   }
   
   const projectId = () => {
