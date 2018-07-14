@@ -13,11 +13,10 @@ Lib.attachEvent(".details-toggler", e => {
 
 // SLIDER TEXT DISPLAY
 Lib.attachEvent("#priority-slider", e => {
-  let priorityValue = parseInt(e.target.value) - 1
-  let prioLevels = ["Low", "Normal" ,"High"]
+  let priorityValue = parseInt(e.target.value)
   const priorityDisplay = Lib.find("#priority-value")
-  priorityDisplay.textContent = prioLevels[priorityValue]
-  priorityDisplay.className = prioLevels[priorityValue].toLowerCase() + "-prio-color"
+  priorityDisplay.textContent = DOMHandler.prio(priorityValue)
+  priorityDisplay.className = DOMHandler.prioClass(priorityValue) + "-color"
 }, 'input')
 
 // CLOSE TASK MODAL

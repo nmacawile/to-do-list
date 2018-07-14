@@ -60,7 +60,9 @@ const DOMLibrary = (() => {
       })
   }
   
-  return { find, findAll, findAncestor, createText, create, attachEvent }
+  const append = (element, childrenArr) => childrenArr.forEach(child => element.appendChild(child))
+  
+  return { find, findAll, findAncestor, createText, create, attachEvent, append }
 })()
 
 export default DOMLibrary

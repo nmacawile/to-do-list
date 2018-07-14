@@ -11,22 +11,31 @@ const DOMHandler = (() => {
     list.appendChild(element)
   }
   
+  const prio = prioValue => { 
+    const matrix = ["Low", "Normal", "High"]
+    return matrix[prioValue - 1]
+  }
+  
   const prioClass = prioValue => {
-    if (prioValue == 1) return "low-prio"
-    else if (prioValue == 3) return "high-prio"
-    else return "normal-prio"
+    return prio(prioValue).toLowerCase() + "-prio"
   }
   
   const createTask = (task, prepend = false) => {
     const list = Lib.find(".task-list")
     let classes = ["task", prioClass(task.priority)]
-    if (task.complete) {
-      classes.push("complete")
-       
-    }
+    if (task.complete) classes.push("complete")
     
     const element = Lib.create("li", { classes: classes  })
     element.dataset["task_id"] = task.id
+    
+    const header = createTaskHeader(task)
+    const body = createTaskBody(task)
+    
+    prepend ? list.prepend(element) : list.appendChild(element)
+    Lib.append(element, [header, body])
+  }
+  
+  const createTaskHeader = task => {
     const header = Lib.create("div", { classes: "task-header" })
     const handle = Lib.create("div", { classes: "handle" })
     const handleIcon = Lib.create("i", { classes: "fas fa-thumbtack" })
@@ -35,7 +44,18 @@ const DOMHandler = (() => {
     const taskInfo = Lib.create("div", { classes: "task-info" })
     const dueDate = Lib.create("div", { classes: "task-due-date", text: format(task.dueDate, "hh:mm a | MMM DD, YYYY") })
     const detailsToggler = Lib.create("button", { classes: "details-toggler", type: "button" })
+    
+    Lib.append(header, [handle, headerContent])
+    Lib.append(handle, [handleIcon])
+    Lib.append(headerContent, [taskName, taskInfo])
+    Lib.append(taskInfo, [dueDate, detailsToggler])
+    
+    return header
+  }
+  
+  const createTaskBody = task => {
     const body = Lib.create("div", { classes: "task-body" })
+    
     const details = Lib.create("div", { classes: "task-details" })
     const urgency = Lib.create("div", { classes: "task-urgency" })
     const timeRemaining = Lib.create("div", { classes: "task-remaining-time", text: distanceInWordsToNow(task.dueDate, { addSuffix: true }) })
@@ -49,27 +69,14 @@ const DOMHandler = (() => {
     const deleteBtn = Lib.create("button", { classes: "delete-task-button", type: "button", text: "Delete" })
     deleteBtn.dataset["target_task_id"] = task.id
     
-    prepend ? list.prepend(element) : list.appendChild(element)
-    element.appendChild(header)
-    element.appendChild(body)
-    header.appendChild(handle)
-    handle.appendChild(handleIcon)
-    header.appendChild(headerContent)
-    headerContent.appendChild(taskName)
-    headerContent.appendChild(taskInfo)
-    taskInfo.appendChild(dueDate)
-    taskInfo.appendChild(detailsToggler)
-    body.appendChild(details)
-    details.appendChild(urgency)
-    urgency.appendChild(timeRemaining)
-    urgency.appendChild(prio)
-    details.appendChild(desc)
-    details.appendChild(actions)
-    actions.appendChild(completionIndicator)
-    actions.appendChild(deleteBtn)
-    completionIndicator.appendChild(checkbox)
-    completionIndicator.appendChild(overlayCheckbox)
-    overlayCheckbox.appendChild(check)
+    Lib.append(body, [details])
+    Lib.append(details, [urgency, desc, actions])
+    Lib.append(urgency, [timeRemaining, prio]) 
+    Lib.append(actions, [completionIndicator, deleteBtn])
+    Lib.append(completionIndicator, [checkbox, overlayCheckbox])
+    Lib.append(overlayCheckbox, [check])
+    
+    return body
   }
   
   const destroyTask = id => {
@@ -151,7 +158,8 @@ const DOMHandler = (() => {
   }
   
   return { createProject, createTask, destroyTask, destroyProject, clearProjectPanel, disableProjectPanel, enableProjectPanel, 
-           closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, updateProjectTitle }
+           closeModal, openModal, resetProjectModal, resetTaskModal, resetSliderLabel, clearTasks, closeSidebar, toggleSidebar, 
+           updateProjectTitle, prio, prioClass }
 })()
 
 export default DOMHandler
