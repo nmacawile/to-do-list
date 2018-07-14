@@ -17,7 +17,7 @@ const DOMHandler = (() => {
     else return "normal-prio"
   }
   
-  const createTask = task => {
+  const createTask = (task, prepend = false) => {
     const list = Lib.find(".task-list")
     let classes = ["task", prioClass(task.priority)]
     if (task.complete) {
@@ -49,7 +49,7 @@ const DOMHandler = (() => {
     const deleteBtn = Lib.create("button", { classes: "delete-task-button", type: "button", text: "Delete" })
     deleteBtn.dataset["target_task_id"] = task.id
     
-    list.prepend(element)
+    prepend ? list.prepend(element) : list.appendChild(element)
     element.appendChild(header)
     element.appendChild(body)
     header.appendChild(handle)

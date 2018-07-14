@@ -101,7 +101,7 @@ const generateProject = () => {
 // CREATE TASK
 const generateTask = () => {
   let task = activeProject.newTask(...taskFormData())
-  DOMHandler.createTask(task)
+  DOMHandler.createTask(task, true)
 }
 
 // RETRIEVE TASK FORM DATA
@@ -137,7 +137,7 @@ const tryLoadingFirstProject = () => {
 // LOAD TASKS
 const loadTasks = project => {
   DOMHandler.clearTasks()
-  project.tasks.reverse().forEach(task => DOMHandler.createTask(task))
+  project.tasks.forEach(task => DOMHandler.createTask(task))
 }
 
 
