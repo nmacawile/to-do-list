@@ -26,12 +26,9 @@ Lib.attachEvent("#close-task-modal", e => {
 })
 
 // OPEN TASK MODAL
-Lib.attachEvent(".new-task-button", e => DOMHandler.openModal("#new-task-modal"))
-
-
 Lib.attachEvent(".new-task-button", e => { 
   DOMHandler.openModal("#new-task-modal")
-  Lib.find("#due-date-field").value = format(new Date(), "YYYY-MM-DD[T]hh:mm")
+  Lib.find("#due-date-field").value = format(new Date(), "YYYY-MM-DD[T]HH:mm")
 })
 
 // CLOSE PROJECT MODAL
